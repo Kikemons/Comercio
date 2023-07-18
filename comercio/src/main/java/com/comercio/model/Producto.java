@@ -17,12 +17,26 @@ public class Producto {
 
     private int cantidad;
 
-  public void setId(Integer id){
-      this.id=id;
-  }
-  public Integer getId(){
-      return id;
-  }
+    @ManyToOne
+    private Usuario usuario;
+
+
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getNombre() {
         return nombre;

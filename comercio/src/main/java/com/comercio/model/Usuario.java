@@ -3,6 +3,8 @@ package com.comercio.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Usuario")
 
@@ -17,6 +19,28 @@ public class Usuario {
     private String telefono;
     private String tipo;
     private String password;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Producto> producto;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Orden> orden;
+
+    public List<Producto> getProducto() {
+        return producto;
+    }
+
+    public void setProducto(List<Producto> producto) {
+        this.producto = producto;
+    }
+
+    public List<Orden> getOrden() {
+        return orden;
+    }
+
+    public void setOrden(List<Orden> orden) {
+        this.orden = orden;
+    }
 
     public Integer getId() {
         return id;

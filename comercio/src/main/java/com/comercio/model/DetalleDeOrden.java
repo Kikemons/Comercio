@@ -1,13 +1,44 @@
 package com.comercio.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "DetalleDeOrden")
 public class DetalleDeOrden {
 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nombre;
 
     private double cantiidad;
     private double precio;
     private double total;
+
+
+    @ManyToOne
+    private Producto producto;
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    public Orden getOrden() {
+        return orden;
+    }
+
+    public void setOrden(Orden orden) {
+        this.orden = orden;
+    }
+
+    @OneToOne
+    private Orden orden;
+
 
     public Integer getId() {
         return id;
