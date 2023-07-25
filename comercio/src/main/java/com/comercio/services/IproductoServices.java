@@ -3,6 +3,7 @@ package com.comercio.services;
 import com.comercio.model.Producto;
 
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IproductoServices {
@@ -12,4 +13,6 @@ public interface IproductoServices {
 
     public void actualizar(Producto producto);
     public void borrar(Integer id);
+
+     List<Producto> mostrarProductos();
 }

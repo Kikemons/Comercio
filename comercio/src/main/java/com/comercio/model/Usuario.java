@@ -42,6 +42,19 @@ public class Usuario {
         this.orden = orden;
     }
 
+    public Usuario() {
+    }
+
+    public Usuario(Integer id, String nombre, String username, String email, String direccion, String telefono, String tipo, String password) {
+        this.id = id;
+        this.nombre = nombre;
+        this.username = username;
+        this.email = email;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.tipo = tipo;
+        this.password = password;
+    }
     public Integer getId() {
         return id;
     }
@@ -105,4 +118,24 @@ public class Usuario {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", tipo='" + tipo + '\'' +
+                ", password='" + password + '\'' +
+                ", producto=" + producto +
+                ", orden=" + orden +
+                '}';
+    }
+
+
+
+
 }

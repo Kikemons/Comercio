@@ -12,6 +12,9 @@ public class ProductoServices implements IproductoServices{
 
     @Autowired
     private ProductoRepository productoRepository;
+
+
+
     @Override
     public Producto guardar(Producto producto) {
         return productoRepository.save(producto);
@@ -31,4 +34,12 @@ public class ProductoServices implements IproductoServices{
     public void borrar(Integer id) {
     productoRepository.deleteById(id);
     }
+
+
+    @Override
+    public List<Producto> mostrarProductos() {
+        return productoRepository.findAll();
+    }
+
+
 }
