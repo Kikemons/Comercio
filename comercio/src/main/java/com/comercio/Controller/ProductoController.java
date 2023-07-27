@@ -47,14 +47,7 @@ public class ProductoController {
         String nombreImagen= uploadFileServices.saveImage(file);
         producto.setImagen(nombreImagen);
         }else{
-           if (file.isEmpty()){ //es cuando editamos producto pero no cambiamos la imagen
-               Producto p= new Producto();
-               p=productoServices.obtener(producto.getId()).get();
-               producto.setImagen(p.getImagen());
-           }else{
-               String nombreImagen= uploadFileServices.saveImage(file);
-               producto.setImagen(nombreImagen);
-           }
+
         }
 
        productoServices.guardar(producto);
@@ -71,7 +64,22 @@ public class ProductoController {
     }
 
     @PostMapping ("/actualizar")
-    public String actualizar(Producto producto){
+    public String actualizar(Producto producto,@RequestParam("img") MultipartFile file) throws IOException {
+        if (!file.isEmpty()){ //es cuando editamos producto pero no cambiamos la imagen
+            Producto p= new Producto();
+            p=productoServices.obtener(producto.getId()).get();
+            producto.setImagen(p.getImagen());
+        }else{//cuando se edita tambien la imagen
+            Producto p = new Producto();
+            p=productoServices.obtener(producto.getId()).get();
+
+            //eliminar ccuando no sea la imagen por defecto
+            if (!p.getImagen().equals("defaul.jpg")){
+                uploadFileServices.deleteImage(p.getImagen());
+            }
+            String nombreImagen= uploadFileServices.saveImage(file);
+            producto.setImagen(nombreImagen);
+        }
         productoServices.actualizar(producto);
         return "redirect:/productos";
     }
@@ -79,6 +87,12 @@ public class ProductoController {
     @GetMapping("/borrar/{id}")
     public String borrar(@PathVariable Integer id){
         Producto producto = new Producto();
+        producto=productoServices.obtener(id).get();
+
+        //eliminar ccuando no sea la imagen por defecto
+        if (!producto.getImagen().equals("defaul.jpg")){
+        uploadFileServices.deleteImage(producto.getImagen());
+        }
         productoServices.borrar(id);
         return "redirect:/productos";
     }
