@@ -12,7 +12,7 @@ public class DetalleDeOrden {
     private Integer id;
     private String nombre;
 
-    private double cantiidad;
+    private double cantidad;
     private double precio;
     private double total;
 
@@ -56,12 +56,12 @@ public class DetalleDeOrden {
         this.nombre = nombre;
     }
 
-    public double getCantiidad() {
-        return cantiidad;
+    public double getCantidad() {
+        return cantidad;
     }
 
-    public void setCantiidad(double cantiidad) {
-        this.cantiidad = cantiidad;
+    public void setCantidad(double cantiidad) {
+        this.cantidad = cantiidad;
     }
 
     public double getPrecio() {
