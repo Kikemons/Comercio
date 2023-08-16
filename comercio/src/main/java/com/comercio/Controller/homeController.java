@@ -8,6 +8,7 @@ import com.comercio.services.DetalleServices;
 import com.comercio.services.OrdenServices;
 import com.comercio.services.ProductoServices;
 import com.comercio.services.UsuarioServices;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -42,7 +44,8 @@ public class homeController {
     private OrdenServices ordenServices;
 
     @GetMapping("/")
-    public String home(Model model) {
+    public String home(Model model, HttpSession session) {
+        log.info("la id del ususario es: {}",session.getAttribute("idUsuario"));
         model.addAttribute("productos", productoService.mostrarProductos());
         return "Usuario/home";
     }
@@ -125,8 +128,8 @@ public class homeController {
     }
 
     @GetMapping("/resumenOrden")
-    public String resumenOrden( Model model){
-        Usuario usuario= usuarioServices.obtenerId(1).get();
+    public String resumenOrden( Model model, HttpSession session){
+        Usuario usuario= usuarioServices.obtenerId(Integer.parseInt(session.getAttribute("idUsuario").toString())).get();
 
         model.addAttribute("carrito", detalleOrden);
         model.addAttribute("orden",orden);
@@ -135,12 +138,12 @@ public class homeController {
     }
 
     @GetMapping("/saveOrden")
-    public String guardarOrden(){
+    public String guardarOrden( HttpSession session){
         Date fecha= new Date();
         orden.setFechaCreacion(fecha);
         orden.setNumero(ordenServices.generarNumOrden());
 
-        orden.setUsuario(usuarioServices.obtenerId(1).get());
+        orden.setUsuario(usuarioServices.obtenerId(Integer.parseInt(session.getAttribute("idUsuario").toString())).get());
         ordenServices.crear(orden);
 
 
@@ -158,5 +161,12 @@ public class homeController {
         return  "redirect:/";
     }
 
+    @PostMapping("/buscar")
+    public String buscarProduct(@RequestParam String nombre, Model model){
+        log.info("el nombre del producto: {} ",nombre);
+        List<Producto> producto= productoService.mostrarProductos().stream().filter(fl-> fl.getNombre().contains(nombre)).collect(Collectors.toList());
+        model.addAttribute( "productos", producto);
+        return  "Usuario/home";
+    }
 
 }

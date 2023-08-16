@@ -38,4 +38,9 @@ public class UsuarioServices implements IUsuarioServices{
     public void actualizar(Usuario usuario) {
         usuarioRepository.save(usuario);
     }
+
+    @Override
+    public Optional<Usuario> findByEmail(String email) {
+        return usuarioRepository.findByEmail(email);
+    }
 }

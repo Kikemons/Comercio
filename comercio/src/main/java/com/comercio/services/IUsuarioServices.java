@@ -17,4 +17,6 @@ public interface IUsuarioServices {
 
   public void actualizar(Usuario usuario);
 
+  public Optional<Usuario> findByEmail(String email);
+
 }
