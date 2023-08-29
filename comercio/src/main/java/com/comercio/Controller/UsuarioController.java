@@ -1,16 +1,16 @@
 package com.comercio.Controller;
 
+import com.comercio.model.Orden;
 import com.comercio.model.Usuario;
+import com.comercio.services.OrdenServices;
 import com.comercio.services.UsuarioServices;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +23,8 @@ public class UsuarioController {
     @Autowired
     private UsuarioServices usuarioServices;
 
+    @Autowired
+    private OrdenServices ordenServices;
 
     //se crea el mapping del aparatdo registro
     @GetMapping("/registro")
@@ -59,6 +61,30 @@ public class UsuarioController {
             logger.info("usuario no registrado");
         }
         return"redirect:/";
+    }
+
+    @GetMapping("/compras")
+    public String compras(HttpSession session, Model model) {
+    model.addAttribute("sesion", session.getAttribute("idUsuario"));
+    Usuario usuario= usuarioServices.obtenerId(Integer.parseInt(session.getAttribute("idUsuario").toString())).get();
+    List<Orden> orden=ordenServices.findByUsuario(usuario);
+    model.addAttribute("ordenes", orden);
+        return "Usuario/compras";
+    }
+
+    @GetMapping("/detalle/{id}")
+    public String detalleCompra(@PathVariable Integer id, HttpSession session, Model model){
+        logger.info("el id de la orden es {} ",id);
+        Optional<Orden> orden= ordenServices.ordenId(id);
+        model.addAttribute("detalles", orden.get().getDetalle());
+        model.addAttribute("sesion", session.getAttribute("idUsuario"));
+        return "Usuario/detallecompra";
+    }
+
+    @GetMapping("/cerrar")
+    public String cerrar(HttpSession session){
+        session.removeAttribute("idUsuario");
+        return "redirect:/";
     }
 
 }

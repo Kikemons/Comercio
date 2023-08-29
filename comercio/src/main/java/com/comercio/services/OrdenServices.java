@@ -2,6 +2,7 @@ package com.comercio.services;
 
 
 import com.comercio.model.Orden;
+import com.comercio.model.Usuario;
 import com.comercio.repository.OrdenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,5 +70,10 @@ public class OrdenServices implements IOrdenServices{
 
 
         return numeroC;
+    }
+
+    @Override
+    public List<Orden> findByUsuario(Usuario usuario) {
+        return ordenRepository.findByUsuario(usuario);
     }
 }

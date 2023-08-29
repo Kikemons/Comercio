@@ -152,7 +152,9 @@ public class homeController {
 
         orden.setUsuario(usuarioServices.obtenerId(Integer.parseInt(session.getAttribute("idUsuario").toString())).get());
         ordenServices.crear(orden);
+        Integer id= usuarioServices.obtenerId(Integer.parseInt(session.getAttribute("idUsuario").toString())).get().getId();
 
+        log.info("el id del usuario es: {}",id);
 
         //guardar detalles
 
@@ -174,6 +176,12 @@ public class homeController {
         List<Producto> producto= productoService.mostrarProductos().stream().filter(fl-> fl.getNombre().contains(nombre)).collect(Collectors.toList());
         model.addAttribute( "productos", producto);
         return  "Usuario/home";
+    }
+
+    @GetMapping("/usuarios")
+    public String usuarios( Model model){
+        model.addAttribute("Usuarios",usuarioServices.mostrarUsuarios());
+        return"administrador/usuarios";
     }
 
 }

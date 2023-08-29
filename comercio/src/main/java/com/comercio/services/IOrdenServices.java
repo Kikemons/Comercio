@@ -1,6 +1,7 @@
 package com.comercio.services;
 
 import com.comercio.model.Orden;
+import com.comercio.model.Usuario;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,4 +22,5 @@ public interface IOrdenServices {
 
     public String generarNumOrden();
 
+    List<Orden>  findByUsuario (Usuario usuario);
 }
