@@ -87,4 +87,22 @@ public class UsuarioController {
         return "redirect:/";
     }
 
+    @GetMapping ("/user")
+        public String usuarios(Usuario usuario,Model model){
+        model.addAttribute("Usuarios", usuarioServices.mostrarUsuarios());
+        return "administrador/usuarios";
+        }
+
+        @GetMapping("/ordenes")
+        public String ordenes(Orden orden, Model model){
+        model.addAttribute("ordenes", ordenServices.mostrar());
+        return "administrador/compras";
+        }
+
+        @GetMapping("/detalleOrden/{id}")
+        public String dettaleorden (@PathVariable Integer id, Model model){
+        Optional<Orden> orden=ordenServices.ordenId(id);
+        model.addAttribute("detalleorden", orden.get().getDetalle());
+        return "administrador/detallecompra";
+        }
 }
