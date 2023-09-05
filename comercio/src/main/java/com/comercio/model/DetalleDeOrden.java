@@ -20,25 +20,9 @@ public class DetalleDeOrden {
     @ManyToOne
     private Producto producto;
 
-    public Producto getProducto() {
-        return producto;
-    }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
-    }
-
-    public Orden getOrden() {
-        return orden;
-    }
-
-    public void setOrden(Orden orden) {
-        this.orden = orden;
-    }
-
-    @OneToOne
+    @ManyToOne
     private Orden orden;
-
 
     public Integer getId() {
         return id;
@@ -60,8 +44,8 @@ public class DetalleDeOrden {
         return cantidad;
     }
 
-    public void setCantidad(double cantiidad) {
-        this.cantidad = cantiidad;
+    public void setCantidad(double cantidad) {
+        this.cantidad = cantidad;
     }
 
     public double getPrecio() {
@@ -78,5 +62,21 @@ public class DetalleDeOrden {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    public Orden getOrden() {
+        return orden;
+    }
+
+    public void setOrden(Orden orden) {
+        this.orden = orden;
     }
 }

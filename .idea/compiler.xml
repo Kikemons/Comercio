@@ -9,10 +9,16 @@
         <module name="comercio" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="comercio (1)" target="17" />
+      <module name="comercio (2)" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="comercio" options="-parameters" />
+      <module name="comercio (1)" options="-parameters" />
+      <module name="comercio (2)" options="-parameters" />
     </option>
   </component>
 </project>

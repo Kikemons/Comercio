@@ -44,9 +44,11 @@ public class ProductoController {
 
     @PostMapping("/guardar")
     public String guardar(Producto producto, @RequestParam("img") MultipartFile file,HttpSession session) throws IOException {
-        //LOGGER.info("este es el objeto producto {}",producto);
-        Usuario u= usuarioServices.obtenerId(Integer.parseInt(session.getAttribute("idUsuaio").toString())).get();
+        LOGGER.info("este es el objeto producto {}",producto);
+        Usuario u= usuarioServices.obtenerId(Integer.parseInt(session.getAttribute("idUsuario").toString())).get();
+        LOGGER.info("el usuario es: {}",u.getId());
         producto.setUsuario(u);
+
         // imagen
         if (producto.getId()==null){//validacion cuando se crea un producto
         String nombreImagen= uploadFileServices.saveImage(file);
@@ -63,27 +65,23 @@ public class ProductoController {
         Producto producto= new Producto();
         Optional<Producto> OpProducto=productoServices.obtener(id);
         producto=OpProducto.get();
-        //LOGGER.info("el producto es: {}",producto);
+        LOGGER.info("el producto es: {}",producto);
         model.addAttribute("productoId", producto);
         return "productos/edit";
     }
 
     @PostMapping ("/actualizar")
     public String actualizar(Producto producto,@RequestParam("img") MultipartFile file) throws IOException {
-        if (!file.isEmpty()){ //es cuando editamos producto pero no cambiamos la imagen
+
+        if (file.isEmpty()){ //es cuando editamos producto pero no cambiamos la imagen
             Producto p= new Producto();
             p=productoServices.obtener(producto.getId()).get();
             producto.setImagen(p.getImagen());
-        }else{//cuando se edita tambien la imagen
-            Producto p = new Producto();
-            p=productoServices.obtener(producto.getId()).get();
-
-            //eliminar ccuando no sea la imagen por defecto
-            if (!p.getImagen().equals("defaul.jpg")){
-                uploadFileServices.deleteImage(p.getImagen());
-            }
+        }
+        else{//cuando se edita tambien la imagen
             String nombreImagen= uploadFileServices.saveImage(file);
             producto.setImagen(nombreImagen);
+
         }
         productoServices.actualizar(producto);
         return "redirect:/productos";

@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ComercioApplication<comercio>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.comercio.ComercioApplication",
+            "projectName": "comercio",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

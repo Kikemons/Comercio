@@ -3,6 +3,7 @@ package com.comercio.model;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Orden")
@@ -16,28 +17,13 @@ public class Orden {
     private Date fechaRecibida;
     private double total;
 
-    @OneToOne(mappedBy = "orden")
-    private DetalleDeOrden detalle;
+    @OneToMany(mappedBy = "orden")
+    private List<DetalleDeOrden> detalle;
 
 
     @ManyToOne
     private Usuario usuario;
 
-    public DetalleDeOrden getDetalle() {
-        return detalle;
-    }
-
-    public void setDetalle(DetalleDeOrden detalle) {
-        this.detalle = detalle;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
 
     public Integer getId() {
         return id;
@@ -78,4 +64,22 @@ public class Orden {
     public void setTotal(double total) {
         this.total = total;
     }
+
+    public List<DetalleDeOrden> getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(List<DetalleDeOrden> detalle) {
+        this.detalle = detalle;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+
 }

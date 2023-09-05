@@ -50,7 +50,7 @@ public class homeController {
 
         model.addAttribute("sesion", session.getAttribute("idUsuario"));
 
-                return "Usuario/home";
+        return "Usuario/home";
 
     }
 
@@ -85,7 +85,7 @@ public class homeController {
         Integer productoId=producto.getId();
         boolean ingresado=detalleOrden.stream().anyMatch(p ->p.getProducto().getId()==productoId);
         if (!ingresado){
-        detalleOrden.add(detalle);
+            detalleOrden.add(detalle);
         }
 
 
@@ -107,7 +107,7 @@ public class homeController {
         List<DetalleDeOrden> nuevaDetalleOrden= new ArrayList<DetalleDeOrden>();
         for (DetalleDeOrden detalleDeOrden: detalleOrden){
             if (detalleDeOrden.getProducto().getId()!=(id)){
-            nuevaDetalleOrden.add(detalleDeOrden);
+                nuevaDetalleOrden.add(detalleDeOrden);
             }
         }
         //poner la lista de orden actualizada
@@ -132,7 +132,7 @@ public class homeController {
 
         model.addAttribute("sesion", session.getAttribute("idUsuario"));
         return "Usuario/carrito";
-        }
+    }
 
     @GetMapping("/resumenOrden")
     public String resumenOrden( Model model, HttpSession session){
@@ -152,13 +152,11 @@ public class homeController {
 
         orden.setUsuario(usuarioServices.obtenerId(Integer.parseInt(session.getAttribute("idUsuario").toString())).get());
         ordenServices.crear(orden);
-        Integer id= usuarioServices.obtenerId(Integer.parseInt(session.getAttribute("idUsuario").toString())).get().getId();
 
-        log.info("el id del usuario es: {}",id);
 
         //guardar detalles
 
-        for (DetalleDeOrden dt: detalleOrden){
+        for (DetalleDeOrden dt:detalleOrden) {
             dt.setOrden(orden);
             detalleServices.crear(dt);
         }
@@ -176,12 +174,6 @@ public class homeController {
         List<Producto> producto= productoService.mostrarProductos().stream().filter(fl-> fl.getNombre().contains(nombre)).collect(Collectors.toList());
         model.addAttribute( "productos", producto);
         return  "Usuario/home";
-    }
-
-    @GetMapping("/usuarios")
-    public String usuarios( Model model){
-        model.addAttribute("Usuarios",usuarioServices.mostrarUsuarios());
-        return"administrador/usuarios";
     }
 
 }
