@@ -8,6 +8,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,10 @@ public class UsuarioController {
     @Autowired
     private OrdenServices ordenServices;
 
+
+    BCryptPasswordEncoder PasswordEn= new BCryptPasswordEncoder();
+
+
     //se crea el mapping del aparatdo registro
     @GetMapping("/registro")
     public String crear(){
@@ -36,6 +41,7 @@ public class UsuarioController {
     public String subirUsusario(Usuario usuario, Model model){
         logger.info("usuario registro es: {}",usuario);
         usuario.setTipo("USER");
+        usuario.setPassword(PasswordEn.encode(usuario.getPassword()));
         usuarioServices.crear(usuario);
         return"redirect:/";
     }
