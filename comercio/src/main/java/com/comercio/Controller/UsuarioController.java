@@ -4,7 +4,6 @@ import com.comercio.model.Orden;
 import com.comercio.model.Usuario;
 import com.comercio.services.OrdenServices;
 import com.comercio.services.UsuarioServices;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +26,8 @@ public class UsuarioController {
     @Autowired
     private OrdenServices ordenServices;
 
+    BCryptPasswordEncoder PasswordEncoder= new BCryptPasswordEncoder();
 
-    BCryptPasswordEncoder PasswordEn= new BCryptPasswordEncoder();
 
 
     //se crea el mapping del aparatdo registro
@@ -41,7 +40,7 @@ public class UsuarioController {
     public String subirUsusario(Usuario usuario, Model model){
         logger.info("usuario registro es: {}",usuario);
         usuario.setTipo("USER");
-        usuario.setPassword(PasswordEn.encode(usuario.getPassword()));
+        usuario.setPassword(PasswordEncoder.encode(usuario.getPassword()));
         usuarioServices.crear(usuario);
         return"redirect:/";
     }
