@@ -1,4 +1,4 @@
-package com.comercio;
+package com.comercio.config;
 
 import com.comercio.services.UserDetailServices;
 import org.springframework.beans.factory.annotation.Autowired;
