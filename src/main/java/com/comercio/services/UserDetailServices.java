@@ -31,9 +31,9 @@ public class UserDetailServices implements UserDetailsService {
         Optional<Usuario> optionalUsuario=usuarioServices.findByEmail(username);
         log.info("este es el username: ",optionalUsuario.get().getUsername());
         if (optionalUsuario.isPresent()){
-        Usuario user=optionalUsuario.get();
-        log.info("el usuario es ", user);
-        return User.withUsername(user.getEmail()).password(passwordEncoder.encode(user.getPassword())).roles(user.getTipo()).build();
+            Usuario user=optionalUsuario.get();
+            log.info("el usuario es ", user);
+            return User.withUsername(user.getEmail()).password(user.getPassword()).roles(user.getTipo()).build();
         }else{
             throw new UsernameNotFoundException("User no encontrado");
         }
